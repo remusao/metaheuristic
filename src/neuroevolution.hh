@@ -1,0 +1,4 @@
+#ifndef NEUROEVOLUTION_HH_
+# define NEUROEVOLUTION_HH_
+
+#endif /* !NEUROEVOLUTION_HH_ */
