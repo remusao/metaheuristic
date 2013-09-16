@@ -28,7 +28,7 @@ namespace mh
             {
                 // Randomly init the dna code
                 std::mt19937 engine;  // Mersenne twister random number engine
-                std::uniform_real_distribution<Scalar> distr(begin_range, end_range);
+                std::uniform_int_distribution<Scalar> distr(begin_range, end_range);
                 code_.imbue([&]() { return distr(engine); });
             }
 
@@ -96,12 +96,13 @@ namespace mh
                 uint64_t dna_size,
                 uint64_t selection_amount,
                 double mutation_rate)
-                : population_(std::vector<DNA>(pop_size)),
+                : population_(std::vector<DNA>()),
                   dna_size_(dna_size),
                   selection_(selection_amount),
                   mutation_rate_(mutation_rate),
                   best_(DNA(dna_size))
             {
+		population_.reserve(pop_size);
                 std::generate_n(population_.begin(), pop_size, [dna_size]()
                 {
                     return DNA(dna_size);

@@ -1,4 +1,4 @@
-CXX=g++
+CXX=clang++
 CXXFLAGS=-std=c++11 -O3 -Wall -Wextra -pedantic
 LDFLAGS=-larmadillo # -lmlpack
 INCLUDES=-I../include

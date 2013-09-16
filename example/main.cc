@@ -6,7 +6,7 @@ int main()
     mh::GeneticAlgorithm<mh::Dna<unsigned>> ga(1000, 5, 100, 0.5);
     auto fitness = [](const mh::Dna<unsigned>& dna)
     {
-        double res;
+        double res = 0.0;
         for (uint64_t i = 0; i < dna.getSize(); ++i)
         {
             if (dna.getCode()(i) == 42)
