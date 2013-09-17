@@ -1,6 +1,6 @@
-CXX=clang++
-CXXFLAGS=-std=c++11 -O3 -Wall -Wextra -pedantic
-LDFLAGS=-larmadillo # -lmlpack
+CXX=g++
+CXXFLAGS=-std=c++11 -Ofast -Wall -Wextra -pedantic
+LDFLAGS=-larmadillo -ltbb
 INCLUDES=-I../include
 SRC=main.cc
 

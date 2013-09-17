@@ -1,15 +1,28 @@
+#include <iostream>
 #include <metaheuristic.hh>
 
 
 int main()
 {
-    mh::GeneticAlgorithm<mh::Dna<unsigned>> ga(1000, 5, 100, 0.5);
-    auto fitness = [](const mh::Dna<unsigned>& dna)
+    using GA = mh::GeneticAlgorithm<unsigned>;
+
+    // Options
+    GA::Options options;
+    options.setBeginRange(0);
+    options.setEndRange(200);
+    options.setPopSize(10000);
+
+    // Genetic Algorithm
+    GA ga(options, 100);
+    // Optional init of tbb scheduler
+    tbb::task_scheduler_init init(8);
+
+    auto fitness = [](const typename GA::dna_type& dna)
     {
         double res = 0.0;
         for (uint64_t i = 0; i < dna.getSize(); ++i)
         {
-            if (dna.getCode()(i) == 42)
+            if (dna[i] == 42)
             {
                 res += 1;
             }
@@ -18,10 +31,7 @@ int main()
         return res;
     };
 
-    while (ga.getBestScore() < 4.0)
-    {
-        ga.step(fitness);
-    }
+    std::cout << "Epocs: " << ga.run(fitness, 80.0) << std::endl;
 
     return 0;
 }
