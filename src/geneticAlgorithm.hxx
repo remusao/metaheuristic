@@ -156,15 +156,14 @@ namespace mh
         }
 
         // Parallel computation of fitness score
-        auto computeFitness = [this, &fitness](const tbb::blocked_range<size_t>& r)
+        auto computeFitness = [this, &fitness](const tbb::blocked_range<uint64_t>& r)
         {
-            for(size_t i = r.begin(); i != r.end(); ++i)
+            for (uint64_t i = r.begin(); i != r.end(); ++i)
             {
                 population_[i].setScore(fitness(population_[i]));
             }
         };
-
-        tbb::parallel_for(tbb::blocked_range<std::size_t>(0, population_.size()), computeFitness);
+        tbb::parallel_for(tbb::blocked_range<uint64_t>(0, population_.size()), computeFitness);
 
         // Sort by descending score
         std::sort(population_.begin(), population_.end(),
@@ -189,15 +188,10 @@ namespace mh
         for (uint64_t i = 0; i < population_.size(); ++i)
         {
             // Cross-over
-            if (selection(engine_) > 0.5)
-            {
-                new_pop.emplace_back(dna_type(engine_, dnaSize_, population_[distr(engine_)], population_[distr(engine_)]));
-            }
-            else // Mutation
-            {
-                new_pop.emplace_back(population_[distr(engine_)]);
-                mutate(new_pop.back());
-            }
+            new_pop.emplace_back(dna_type(engine_, dnaSize_, population_[distr(engine_)], population_[distr(engine_)]));
+
+            // Mutation
+            mutate(new_pop.back());
         }
 
         population_ = std::move(new_pop);

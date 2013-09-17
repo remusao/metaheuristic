@@ -11,6 +11,8 @@ int main()
     options.setBeginRange(0);
     options.setEndRange(200);
     options.setPopSize(10000);
+    options.setSelectionAmount(50);
+    options.setMutationRate(0.1);
 
     // Genetic Algorithm
     GA ga(options, 100);
@@ -31,7 +33,7 @@ int main()
         return res;
     };
 
-    std::cout << "Epocs: " << ga.run(fitness, 80.0) << std::endl;
+    std::cout << "Epocs: " << ga.run(fitness, 90.0) << std::endl;
 
     return 0;
 }
