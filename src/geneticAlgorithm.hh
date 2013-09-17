@@ -131,7 +131,7 @@ namespace mh
             uint64_t                dnaSize_;
             Options                 options_;
             dna_type                best_;
-            std::random_device      engine_;
+            std::mt19937_64         engine_;
     };
 }
 
