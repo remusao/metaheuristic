@@ -59,6 +59,10 @@ namespace mh
                     double getScore() const { return score_; }
                     void setScore(double score) { score_ = score; }
 
+                    // Get internal representation
+                    vector_type& getCode() { return code_; }
+                    const vector_type& getCode() const { return code_; }
+
                 private:
                     vector_type code_;
                     uint64_t    size_;
@@ -110,8 +114,9 @@ namespace mh
             GeneticAlgorithm& operator=(GeneticAlgorithm&&) = default;
 
             // Methods
-            template <typename FitnessFunction>
-            uint64_t run(FitnessFunction& fitness, double target);
+            template <typename FitnessFunction, typename TargetFunction>
+            typename dna_type::vector_type
+            run(FitnessFunction& fitness, TargetFunction& target);
 
             // Accessors
             uint64_t getDnaSize() const { return dnaSize_; }

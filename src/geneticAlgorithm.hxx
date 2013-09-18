@@ -130,19 +130,23 @@ namespace mh
 
 
     template <typename Scalar>
-    template <typename FitnessFunction>
-    uint64_t GeneticAlgorithm<Scalar>::run(FitnessFunction& fitness, double target)
+    template <typename FitnessFunction, typename TargetFunction>
+    typename GeneticAlgorithm<Scalar>::dna_type::vector_type
+    GeneticAlgorithm<Scalar>::run(FitnessFunction& fitness, TargetFunction& target)
     {
         uint64_t epoc = 0;
 
-        while (epoc < options_.maxEpoc_ && best_.getScore() < target)
+        // Init random Best DNA score
+        best_.setScore(fitness(best_));
+
+        while (epoc < options_.maxEpoc_ && !target(best_.getScore()))
         {
             std::cout << "Epoc: " << epoc << " - Best: " << best_.getScore() << std::endl;
             step(fitness);
             ++epoc;
         }
 
-        return epoc;
+        return best_.getCode();
     }
 
 
